@@ -1,50 +1,53 @@
-from lib2to3.pgen2.driver import Driver
-from pickletools import string1
-
+import numpy as np
 
 def stint_length(driver_data,num_driver, car):
 
     class Stint:
-        def __init__(self,name):#,d_laps,d_length,n_laps,n_length):
-            self.name = name
-            #self.d_laps = d_laps
-            #self.d_length = d_length
-            #self.n_laps = n_laps
-            #self.n_length = n_length
+        pass
 
-    #Initialize Stint Names in object for loop
-    s1 = Stint(driver_data[0].name)
-    s2 = Stint(driver_data[1].name)
-    s3 = Stint(driver_data[2].name)
-    s4 = Stint(driver_data[3].name)
+    #class Stint:
+    #    def __init__(self,name,d_s_laps,d_s_length,d_p_laps,d_p_length,n_s_laps,n_s_length,n_p_laps,n_p_length):
+    #        self.name = name
+    #        self.d_s_laps = d_s_laps
+    #        self.d_s_length = d_s_length
+    #       self.d_p_laps = d_p_laps
+    #        self.d_p_length = d_p_length
+    #        self.n_s_laps = n_s_laps
+    #       self.n_s_length = n_s_length
+    #       self.n_p_laps = n_p_laps
+    #        self.n_p_length = n_p_length
 
-    stint = [s1,s2,s3,s4]
+    all_stints = [0,0,0,0]          #ADJUST FOR NUMBER OF DRIVERS
+    #print(all_stints)
 
     for i in range(0,num_driver-1):
         data_i = driver_data[i]
 
-        stint[i].d_s_laps = car.fuel_cap / data_i.d_fuel[0] * 1.0    #Calculate day laps, store in stint class, from driver data class (SAVE)
+        stint_data = Stint()
+        stint_data.name = driver_data[i]
 
-        stint[i].d_p_laps = car.fuel_cap / data_i.d_fuel[1] * 1.0  #Calculate day laps, store in stint class, from driver data class (PUSH)
+        stint_data.d_s_laps = round(car.fuel_cap / data_i.d_fuel[0] * 1.0, 2)    #Calculate day laps, store in stint class, from driver data class (SAVE)
 
-        stint[i].n_s_laps = car.fuel_cap / data_i.n_fuel[0] * 1.0    #Calculate night laps, store in stint class, from driver data class (SAVE)
+        stint_data.d_p_laps = round(car.fuel_cap / data_i.d_fuel[1] * 1.0, 2)  #Calculate day laps, store in stint class, from driver data class (PUSH)
 
-        stint[i].n_p_laps = car.fuel_cap / data_i.n_fuel[1] * 1.0  # Calculate night laps, store in stint class, from driver data class (SAVE)
+        stint_data.n_s_laps = round(car.fuel_cap / data_i.n_fuel[0] * 1.0, 2)    #Calculate night laps, store in stint class, from driver data class (SAVE)
 
-        stint[i].d_s_length = round((data_i.d_time[0] * stint[i].d_s_laps)/60.0,3)   #Calculate day stint length, store in stint class, from driver data class
+        stint_data.n_p_laps = round(car.fuel_cap / data_i.n_fuel[1] * 1.0, 2)  # Calculate night laps, store in stint class, from driver data class (SAVE)
 
-        stint[i].d_p_length = round((data_i.d_time[1] * stint[i].d_p_laps)/60.0,3) # Calculate day stint length, store in stint class, from driver data class
+        stint_data.d_s_length = round((data_i.d_time[0] * stint_data.d_s_laps)/60.0,3)   #Calculate day stint length, store in stint class, from driver data class
 
-        stint[i].n_s_length = round((data_i.n_time[0] * stint[i].n_s_laps)/60.0,3)  ##Calculate night stint length, store in stint class, from driver data class
+        stint_data.d_p_length = round((data_i.d_time[1] * stint_data.d_p_laps)/60.0,3) # Calculate day stint length, store in stint class, from driver data class
 
-        stint[i].n_p_length = round((data_i.n_time[1] * stint[i].n_p_laps)/60.0,3) ##Calculate night stint length, store in stint class, from driver data class
+        stint_data.n_s_length = round((data_i.n_time[0] * stint_data.n_s_laps)/60.0,3)  ##Calculate night stint length, store in stint class, from driver data class
 
-    print(stint[1].d_p_length)
-    print(stint[1].d_p_laps)
+        stint_data.n_p_length = round((data_i.n_time[1] * stint_data.n_p_laps)/60.0,3) ##Calculate night stint length, store in stint class, from driver data class
 
-    return
+        all_stints[i] = stint_data
 
+    print(all_stints[1].d_p_length)
+    print(all_stints[1].d_p_laps)
 
+    return all_stints
 
 def main():
 
@@ -139,9 +142,9 @@ def main():
     car = Car(car_name, fuel_capacity)
 
 
-    stint_length(driver_data,num_driver, car)
+    stint_length_data = stint_length(driver_data,num_driver, car)
 
-
+    print(stint_length_data[1])
 
 
 
