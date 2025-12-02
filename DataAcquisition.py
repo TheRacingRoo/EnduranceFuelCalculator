@@ -1,5 +1,52 @@
-def main():
+from lib2to3.pgen2.driver import Driver
+from pickletools import string1
 
+
+def stint_length(driver_data,num_driver, car):
+
+    class Stint:
+        def __init__(self,name):#,d_laps,d_length,n_laps,n_length):
+            self.name = name
+            #self.d_laps = d_laps
+            #self.d_length = d_length
+            #self.n_laps = n_laps
+            #self.n_length = n_length
+
+    #Initialize Stint Names in object for loop
+    s1 = Stint(driver_data[0].name)
+    s2 = Stint(driver_data[1].name)
+    s3 = Stint(driver_data[2].name)
+    s4 = Stint(driver_data[3].name)
+
+    stint = [s1,s2,s3,s4]
+
+    for i in range(0,num_driver-1):
+        data_i = driver_data[i]
+
+        stint[i].d_s_laps = car.fuel_cap / data_i.d_fuel[0] * 1.0    #Calculate day laps, store in stint class, from driver data class (SAVE)
+
+        stint[i].d_p_laps = car.fuel_cap / data_i.d_fuel[1] * 1.0  #Calculate day laps, store in stint class, from driver data class (PUSH)
+
+        stint[i].n_s_laps = car.fuel_cap / data_i.n_fuel[0] * 1.0    #Calculate night laps, store in stint class, from driver data class (SAVE)
+
+        stint[i].n_p_laps = car.fuel_cap / data_i.n_fuel[1] * 1.0  # Calculate night laps, store in stint class, from driver data class (SAVE)
+
+        stint[i].d_s_length = round((data_i.d_time[0] * stint[i].d_s_laps)/60.0,3)   #Calculate day stint length, store in stint class, from driver data class
+
+        stint[i].d_p_length = round((data_i.d_time[1] * stint[i].d_p_laps)/60.0,3) # Calculate day stint length, store in stint class, from driver data class
+
+        stint[i].n_s_length = round((data_i.n_time[0] * stint[i].n_s_laps)/60.0,3)  ##Calculate night stint length, store in stint class, from driver data class
+
+        stint[i].n_p_length = round((data_i.n_time[1] * stint[i].n_p_laps)/60.0,3) ##Calculate night stint length, store in stint class, from driver data class
+
+    print(stint[1].d_p_length)
+    print(stint[1].d_p_laps)
+
+    return
+
+
+
+def main():
 
     class Driver:
         def __init__(self, name, d_time, d_fuel, n_time, n_fuel):
@@ -8,6 +55,8 @@ def main():
             self.d_fuel = d_fuel
             self.n_time = n_time
             self.n_fuel = n_fuel
+
+    num_driver = 4
 
     # Driver 1 Data Acquisition
 
@@ -51,7 +100,7 @@ def main():
     d3_dat = Driver(name3, d_time3, d_fuel3, n_time3, n_fuel3)
     d4_dat = Driver(name4, d_time4, d_fuel4, n_time4, n_fuel4)
 
-
+    driver_data = [d1_dat,d2_dat,d3_dat,d4_dat]         #Package data to send to function
 
 
     #Define race parameters including start time, length, and sunset/sunrise hours
@@ -88,6 +137,25 @@ def main():
     fuel_capacity = 20              #Maximum fuel capacity in gallons (units shouldn't matter though)
 
     car = Car(car_name, fuel_capacity)
+
+
+    stint_length(driver_data,num_driver, car)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
