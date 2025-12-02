@@ -1,0 +1,1 @@
+The purpose of this calculator is to provide an easy way to find the best stragegy over the course of an endurance race using python. Using it as a fun exercise in coding. It would probably be easier to flush out in excel but where's the fun in that?
