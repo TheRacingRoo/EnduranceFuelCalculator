@@ -1,21 +1,4 @@
-
-from dataclasses import field
-from timeit import default_timer
-from tkinter.font import names
-
-def driverdata():
-    """
-    This function takes in driver data for a push stint and a save stint.
-
-    User Inputs:
-        - Driver Name
-        - Driver Lap Time
-        - Driver Fuel / Lap
-
-    Output:
-        - Consolidated driver data within classes
-
-    """
+def main():
 
 
     class Driver:
@@ -68,29 +51,7 @@ def driverdata():
     d3_dat = Driver(name3, d_time3, d_fuel3, n_time3, n_fuel3)
     d4_dat = Driver(name4, d_time4, d_fuel4, n_time4, n_fuel4)
 
-    return d1_dat, d2_dat, d3_dat, d4_dat
 
-
-def race_properties():
-    """
-    This function specifies the race properties expected. Start times are required for driver stint planning.
-    Sunset / Sunrise times are required to estimate day - night pace transitions.
-
-    User Inputs:
-     - Race Length -> Length of the race session
-     - ig_start -> In game start time of the race
-     - irl_start -> Start time of the race (latest time to register, not accounting for warmup time here)
-     - sunset -> Defines sunset time for day-night transition
-     - sunrise -> Defines sunrise time for night-day transition
-
-     - car -> Name of the car being driven
-     - max_fuel -> Defines the max fuel capacity of the car being driven
-
-     - special -> Defines if the event is a special event or not
-    :return:
-
-
-    """
 
 
     #Define race parameters including start time, length, and sunset/sunrise hours
@@ -127,18 +88,6 @@ def race_properties():
     fuel_capacity = 20              #Maximum fuel capacity in gallons (units shouldn't matter though)
 
     car = Car(car_name, fuel_capacity)
-
-    print(car.name)
-    print(r_prop.length)
-
-
-    return Race, Car
-
-
-def main():
-    driverdata()
-    race_properties()
-
 
 
 if __name__ == "__main__":
